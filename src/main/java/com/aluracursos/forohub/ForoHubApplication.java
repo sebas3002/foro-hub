@@ -1,4 +1,4 @@
-package com.aluracursos.demo;
+package com.aluracursos.forohub;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
