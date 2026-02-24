@@ -25,4 +25,13 @@ public class Topico {
     private String autor;
     private String curso;
 
+    public Topico(DatosRegistroTopico datos) {
+        this.titulo = datos.titulo();
+        this.mensaje = datos.mensaje();
+        this.autor = datos.autor();
+        this.curso = datos.curso();
+        this.status = "ABIERTO"; // Valor por defecto
+        this.fechaCreacion = java.time.LocalDateTime.now();
+    }
+
 }
