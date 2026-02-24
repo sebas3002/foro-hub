@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.aluracursos</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>foro-hub</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>foro-hub</name>
 	<description>foro-cursos</description>
