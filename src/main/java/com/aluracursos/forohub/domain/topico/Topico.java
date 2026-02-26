@@ -33,5 +33,13 @@ public class Topico {
         this.status = "ABIERTO"; // Valor por defecto
         this.fechaCreacion = java.time.LocalDateTime.now();
     }
+    public void actualizarInformacion(DatosActualizacionTopico datos) {
+        if (datos.titulo() != null) {
+            this.titulo = datos.titulo();
+        }
+        if (datos.mensaje() != null) {
+            this.mensaje = datos.mensaje();
+        }
+    }
 
 }

@@ -1,9 +1,6 @@
 package com.aluracursos.forohub.controller;
 
-import com.aluracursos.forohub.domain.topico.DatosDetallesTopico;
-import com.aluracursos.forohub.domain.topico.DatosListadoTopico;
-import com.aluracursos.forohub.domain.topico.DatosRegistroTopico;
-import com.aluracursos.forohub.domain.topico.Topico;
+import com.aluracursos.forohub.domain.topico.*;
 import com.aluracursos.forohub.repository.TopicoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +43,29 @@ public class TopicoController {
     @GetMapping("/{id}")
     public ResponseEntity detallar(@PathVariable Long id) {
         var topico = repository.getReferenceById(id);
+        return ResponseEntity.ok(new DatosDetallesTopico(topico));
+    }
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity actualizar(@PathVariable Long id, @RequestBody @Valid DatosActualizacionTopico datos) {
+        // 1. Verificar si el tópico existe usando Optional
+        var topicoOptional = repository.findById(id);
+
+        if (!topicoOptional.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        var topico = topicoOptional.get();
+
+        // 2. Aplicar regla de negocio: No duplicados (opcional pero recomendado por la consigna)
+        // Solo si el título y mensaje cambiaron, validamos que no existan ya.
+        if (repository.existsByTituloAndMensaje(datos.titulo(), datos.mensaje())) {
+            return ResponseEntity.badRequest().body("Ya existe otro tópico con ese título y mensaje.");
+        }
+
+        // 3. Actualizar
+        topico.actualizarInformacion(datos);
+
         return ResponseEntity.ok(new DatosDetallesTopico(topico));
     }
 }
