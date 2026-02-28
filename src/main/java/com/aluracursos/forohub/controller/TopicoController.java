@@ -68,4 +68,16 @@ public class TopicoController {
 
         return ResponseEntity.ok(new DatosDetallesTopico(topico));
     }
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity eliminar(@PathVariable Long id) {
+        var topicoOptional = repository.findById(id);
+
+        if (!topicoOptional.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        repository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
