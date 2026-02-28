@@ -42,7 +42,13 @@ public class TopicoController {
     }
     @GetMapping("/{id}")
     public ResponseEntity detallar(@PathVariable Long id) {
-        var topico = repository.getReferenceById(id);
+        var topicoOptional = repository.findById(id);
+        if (topicoOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        var topico = topicoOptional.get();
+
         return ResponseEntity.ok(new DatosDetallesTopico(topico));
     }
     @PutMapping("/{id}")
@@ -59,8 +65,11 @@ public class TopicoController {
 
         // 2. Aplicar regla de negocio: No duplicados (opcional pero recomendado por la consigna)
         // Solo si el título y mensaje cambiaron, validamos que no existan ya.
-        if (repository.existsByTituloAndMensaje(datos.titulo(), datos.mensaje())) {
-            return ResponseEntity.badRequest().body("Ya existe otro tópico con ese título y mensaje.");
+        if (!topico.getTitulo().equals(datos.titulo()) ||
+                !topico.getMensaje().equals(datos.mensaje())){
+            if (repository.existsByTituloAndMensaje(datos.titulo(), datos.mensaje())) {
+                return ResponseEntity.badRequest().body("Ya existe otro tópico con ese título y mensaje.");
+            }
         }
 
         // 3. Actualizar

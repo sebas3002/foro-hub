@@ -41,13 +41,7 @@ public class Topico {
             this.mensaje = datos.mensaje();
         }
     }
-    public void actualizarInformacion(DatosActualizacionTopico datos) {
-        if (datos.titulo() != null) {
-            this.titulo = datos.titulo();
-        }
-        if (datos.mensaje() != null) {
-            this.mensaje = datos.mensaje();
-        }
-    }
+
+
 
 }
