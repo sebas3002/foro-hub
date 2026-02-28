@@ -28,11 +28,16 @@ public class TokenService {
     }
 
     public String getSubject(String token) {
-        return JWT.require(Algorithm.HMAC256(secret))
-                .withIssuer("forohub")
-                .build()
-                .verify(token)
-                .getSubject();
+        try {
+            return JWT.require(Algorithm.HMAC256(secret))
+                    .withIssuer("forohub")
+                    .build()
+                    .verify(token)
+                    .getSubject();
+        }  catch (Exception e) {
+            return null;
+        }
+
     }
 
     private Instant fechaExpiracion() {
