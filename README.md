@@ -55,4 +55,13 @@ Ajustar las credenciales en el archivo src/main/resources/application.properties
 
 Ejecutar la aplicación desde el IDE o con el comando ./mvnw spring-boot:run.
 
+Seguridad y Autenticación (JWT)
+Autenticación (POST /login): Endpoint público para validar credenciales (login/password).
+
+Generación de Tokens: Implementación de Auth0 JWT para crear tokens firmados.
+
+Filtro de Seguridad: Uso de un OncePerRequestFilter para validar el token Bearer en cada petición a los endpoints protegidos.
+
+Hashing de Claves: Las contraseñas se almacenan de forma segura usando BCrypt.
+
 Desarrollado por Sebastian
